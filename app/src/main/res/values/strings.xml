@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">TryOut</string>
+    <string name="sign_in">Sign In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="not_registered"><u>Not Registered?</u></string>
+    <string name="empty_email_error_message">Please enter your email</string>
+    <string name="invalid_email_error_message">Please enter a valid email</string>
+    <string name="empty_password_error_message">Please enter your password</string>
+    <string name="short_password_error_message">Password has to be more than 6 characters</string>
+    <string name="unregistered_user_error_message">This email is not registered</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="repeat_password">Repeat Password</string>
 </resources>

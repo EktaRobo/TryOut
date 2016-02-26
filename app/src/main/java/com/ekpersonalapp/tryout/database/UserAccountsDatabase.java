@@ -1,25 +1,30 @@
 package com.ekpersonalapp.tryout.database;
 
-import android.content.Context;
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.ekpersonalapp.tryout.utilities.Constants;
 
 /**
  * Created by ekta on 17/2/16.
  */
-public class UserAccountsDatabase extends SQLiteOpenHelper {
+public class UserAccountsDatabase {
+    private static UserAccountsDatabase sUserAccountsDatabase;
+    private boolean isAccountInDatabase;
 
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "user_accounts.db";
+    private UserAccountsDatabase() {
 
-    public UserAccountsDatabase(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    public static UserAccountsDatabase getInstance() {
+        if (sUserAccountsDatabase == null) {
+            sUserAccountsDatabase = new UserAccountsDatabase();
+        }
+        return sUserAccountsDatabase;
+    }
+
+    public void createTable(SQLiteDatabase sqLiteDatabase) {
         final String SQL_USER_ACCOUNT_DATABASE_CREATE_TABLE = "CREATE TABLE " + Constants
                 .AccountsDatabaseEntry.TABLE_NAME + " ( " + Constants.AccountsDatabaseEntry.EMAIL
                 + "TEXT UNIQUE NOT NULL, " + Constants.AccountsDatabaseEntry.PASSWORD + "TEXT " +
@@ -28,11 +33,19 @@ public class UserAccountsDatabase extends SQLiteOpenHelper {
 
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.AccountsDatabaseEntry
-                .TABLE_NAME);
-        onCreate(sqLiteDatabase);
+    public void addTableContent(SQLiteDatabase sqLiteDatabase, String userAccount, String
+            password) {
+        ContentValues values = new ContentValues();
+        values.put(Constants.AccountsDatabaseEntry.EMAIL, userAccount);
+        values.put(Constants.AccountsDatabaseEntry.PASSWORD, password);
+        try {
+            sqLiteDatabase.insertOrThrow(Constants.AccountsDatabaseEntry.TABLE_NAME, null, values);
+        } catch (SQLiteConstraintException e) {
+            isAccountInDatabase = true;
+        }
+    }
 
+    public boolean isAccountInDatabase() {
+        return isAccountInDatabase;
     }
 }

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/outer_padding"
+    tools:context=".signin.SignInActivity">
+
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="@dimen/sign_up__app_icon_padding"
+        android:src="@drawable/logo"/>
+
+    <TextView
+        android:id="@+id/sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo_image"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="@dimen/sign_in_text_view_padding_top"
+        android:text="@string/sign_up"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/account_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sign_in"
+        android:padding="@dimen/edit_text_padding">
+
+        <EditText
+            android:id="@+id/account_id_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/email"/>
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/account_id"
+        android:padding="@dimen/edit_text_padding">
+
+        <EditText
+            android:id="@+id/password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/password"
+            android:inputType="textPassword"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/repeat_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/password"
+        android:padding="@dimen/edit_text_padding">
+
+        <EditText
+            android:id="@+id/repeat_password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/repeat_password"
+            android:inputType="textPassword"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/sign_up_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/repeat_password"
+        android:layout_marginTop="@dimen/not_registered_text_view_padding"
+        android:background="@drawable/sign_in_selector"
+        android:text="@string/sign_up"/>
+
+</RelativeLayout>
