@@ -11,5 +11,10 @@ public interface SignUpView extends BaseViewInterface {
 
     void showPasswordErrorMessage(String errorMessage);
 
-    void showRepeatPasswordErrorMessage(String errorMessage);
+    void showPassword();
+
+    void hidePassword();
+
+    void navigateToSignInScreen();
+
 }

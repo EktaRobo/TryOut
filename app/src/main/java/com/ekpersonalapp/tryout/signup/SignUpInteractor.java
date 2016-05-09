@@ -5,4 +5,6 @@ package com.ekpersonalapp.tryout.signup;
  */
 public interface SignUpInteractor {
     boolean isRegisteredUser(String email);
+
+    void addUserToDatabase(String userName, String accountId, String password);
 }

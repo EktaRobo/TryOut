@@ -11,4 +11,7 @@
     <string name="unregistered_user_error_message">This email is not registered</string>
     <string name="sign_up">Sign Up</string>
     <string name="repeat_password">Repeat Password</string>
+    <string name="user_name">Your Name</string>
+    <string name="show_text_view">SHOW</string>
+    <string name="hide_text_view">HIDE</string>
 </resources>

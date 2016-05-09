@@ -9,4 +9,10 @@ public interface SignInView extends BaseViewInterface {
     void showEmailErrorMessage(String errorMessage);
 
     void showPasswordErrorMessage(String errorMessage);
+
+    void showPassword();
+
+    void hidePassword();
+
+    void navigateToHomeScreen();
 }

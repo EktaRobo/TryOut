@@ -17,14 +17,14 @@ public class SignUpPresenterImpl implements SignUpPresenter {
     public SignUpPresenterImpl(Context context, SignUpView signUpView) {
         mView = signUpView;
         mContext = context;
-        mInteractor = new SignUpInteractorImpl();
+        mInteractor = new SignUpInteractorImpl(context);
     }
 
     @Override
-    public void validateEmailAndPassword(String email, String password, String repeatPassword) {
+    public void validateEmailAndPassword(String userName, String accountId, String password) {
         if (mView == null || mInteractor == null)
             return;
-        String emailAddress = email.trim();
+        String emailAddress = accountId.trim();
         if (TextUtils.isEmpty(emailAddress)) {
             mView.showEmailErrorMessage(mContext.getString(R.string.empty_email_error_message));
         } else if (!EmailUtils.isEmailValid(emailAddress)) {
@@ -37,14 +37,25 @@ public class SignUpPresenterImpl implements SignUpPresenter {
                     .short_password_error_message));
         } else {
             mView.showProgress();
-            if (mInteractor.isRegisteredUser(email)) {
-
-            } else {
+            if (mInteractor.isRegisteredUser(userName)) {
                 mView.hideProgress();
                 mView.showEmailErrorMessage(mContext.getString(R.string
                         .unregistered_user_error_message));
+            } else {
+                mInteractor.addUserToDatabase(userName, accountId, password);
+                mView.hideProgress();
+                mView.navigateToSignInScreen();
             }
         }
 
+    }
+
+    @Override
+    public void showHidePassword(boolean isPasswordVisible) {
+        if (isPasswordVisible) {
+            mView.hidePassword();
+        } else {
+            mView.showPassword();
+        }
     }
 }

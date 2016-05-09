@@ -5,4 +5,6 @@ package com.ekpersonalapp.tryout.signin;
  */
 public interface SignInPresenter {
     void validateEmailAndPassword(String email, String password);
+
+    void showHidePassword(boolean isPasswordVisible);
 }

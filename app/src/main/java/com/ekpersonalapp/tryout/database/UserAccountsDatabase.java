@@ -1,6 +1,7 @@
 package com.ekpersonalapp.tryout.database;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -26,16 +27,18 @@ public class UserAccountsDatabase {
 
     public void createTable(SQLiteDatabase sqLiteDatabase) {
         final String SQL_USER_ACCOUNT_DATABASE_CREATE_TABLE = "CREATE TABLE " + Constants
-                .AccountsDatabaseEntry.TABLE_NAME + " ( " + Constants.AccountsDatabaseEntry.EMAIL
-                + "TEXT UNIQUE NOT NULL, " + Constants.AccountsDatabaseEntry.PASSWORD + "TEXT " +
+                .AccountsDatabaseEntry.TABLE_NAME + " ( " + Constants.AccountsDatabaseEntry
+                .USER_NAME + " TEXT UNIQUE NOT NULL, " + Constants.AccountsDatabaseEntry.EMAIL
+                + " TEXT UNIQUE NOT NULL, " + Constants.AccountsDatabaseEntry.PASSWORD + " TEXT " +
                 "UNIQUE NOT NULL ); ";
         sqLiteDatabase.execSQL(SQL_USER_ACCOUNT_DATABASE_CREATE_TABLE);
 
     }
 
-    public void addTableContent(SQLiteDatabase sqLiteDatabase, String userAccount, String
-            password) {
+    public void addTableContent(SQLiteDatabase sqLiteDatabase, String userName
+            , String userAccount, String password) {
         ContentValues values = new ContentValues();
+        values.put(Constants.AccountsDatabaseEntry.USER_NAME, userName);
         values.put(Constants.AccountsDatabaseEntry.EMAIL, userAccount);
         values.put(Constants.AccountsDatabaseEntry.PASSWORD, password);
         try {
@@ -45,7 +48,23 @@ public class UserAccountsDatabase {
         }
     }
 
-    public boolean isAccountInDatabase() {
+    public boolean isAccountInDatabase(SQLiteDatabase sqLiteDatabase, String email) {
+        String[] tableColumns = new String[]{Constants.AccountsDatabaseEntry.USER_NAME,
+                Constants.AccountsDatabaseEntry.EMAIL, Constants.AccountsDatabaseEntry.PASSWORD};
+        String whereClause = Constants.AccountsDatabaseEntry.EMAIL + " = ?";
+        String[] whereArgs = new String[]{email};
+        try {
+            Cursor cursor = sqLiteDatabase.query(Constants.AccountsDatabaseEntry.TABLE_NAME,
+                    tableColumns, whereClause, whereArgs, null, null, null);
+            while (cursor.moveToNext()) {
+                isAccountInDatabase = true;
+            }
+            sqLiteDatabase.close();
+            cursor.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            isAccountInDatabase = false;
+        }
         return isAccountInDatabase;
     }
 }

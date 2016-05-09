@@ -17,7 +17,7 @@ public class SignInPresenterImpl implements SignInPresenter{
     public SignInPresenterImpl(SignInView signInView, Context context) {
         mView = signInView;
         mContext = context;
-        mInteractor = new SignInInteractorImpl();
+        mInteractor = new SignInInteractorImpl(context);
     }
 
     @Override
@@ -38,12 +38,22 @@ public class SignInPresenterImpl implements SignInPresenter{
         } else {
             mView.showProgress();
             if(mInteractor.isRegisteredUser(email)) {
+                mView.navigateToHomeScreen();
 
             } else {
                 mView.hideProgress();
                 mView.showEmailErrorMessage(mContext.getString(R.string
                                         .unregistered_user_error_message));
             }
+        }
+    }
+
+    @Override
+    public void showHidePassword(boolean isPasswordVisible) {
+        if (isPasswordVisible) {
+            mView.hidePassword();
+        } else {
+            mView.showPassword();
         }
     }
 }

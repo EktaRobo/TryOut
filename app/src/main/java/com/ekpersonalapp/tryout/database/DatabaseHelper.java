@@ -10,7 +10,7 @@ import com.ekpersonalapp.tryout.utilities.Constants;
  * Created by ekta on 22/2/16.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
     private String mDatabaseName;
 
     public DatabaseHelper(Context context, String name) {
@@ -42,12 +42,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void addAccountToDatabase(String userAccount, String password) {
-        UserAccountsDatabase.getInstance().addTableContent(this.getWritableDatabase(),
+    public void addAccountToDatabase(String userName, String userAccount, String password) {
+        UserAccountsDatabase.getInstance().addTableContent(this.getWritableDatabase(), userName,
                 userAccount, password);
     }
 
-    public boolean isAccountInDatabase() {
-        return UserAccountsDatabase.getInstance().isAccountInDatabase();
+    public boolean isAccountInDatabase(String email) {
+        return UserAccountsDatabase.getInstance().isAccountInDatabase(this.getReadableDatabase(),
+                email);
     }
 }
