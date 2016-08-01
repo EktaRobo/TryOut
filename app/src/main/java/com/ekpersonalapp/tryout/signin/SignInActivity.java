@@ -31,7 +31,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_sign_in);
         intUi();
         initClickListeners();
-        mPresenter = new SignInPresenterImpl(this, this);
+        mPresenter = new SignInPresenterImpl(this);
 
     }
 
@@ -74,7 +74,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             return;
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
-        mPresenter.validateEmailAndPassword(email, password);
+        mPresenter.validateEmailAndPassword(email, password, this);
     }
 
     @Override

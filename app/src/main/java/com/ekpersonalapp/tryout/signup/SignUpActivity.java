@@ -28,7 +28,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView, Vie
         setContentView(R.layout.activity_sign_up);
         initUI();
         initClickListeners();
-        mPresenter = new SignUpPresenterImpl(this, this);
+        mPresenter = new SignUpPresenterImpl(this);
     }
 
     private void initUI() {
@@ -87,7 +87,7 @@ public class SignUpActivity extends AppCompatActivity implements SignUpView, Vie
         String userName = mUserNameEditText.getText().toString();
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
-        mPresenter.validateEmailAndPassword(userName, email, password);
+        mPresenter.validateEmailAndPassword(userName, email, password, this);
     }
 
     @Override

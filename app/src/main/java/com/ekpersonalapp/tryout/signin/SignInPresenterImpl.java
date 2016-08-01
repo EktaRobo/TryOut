@@ -11,38 +11,36 @@ import com.ekpersonalapp.tryout.utilities.EmailUtils;
  */
 public class SignInPresenterImpl implements SignInPresenter{
     SignInView mView;
-    Context mContext;
     SignInInteractor mInteractor;
 
-    public SignInPresenterImpl(SignInView signInView, Context context) {
+    public SignInPresenterImpl(SignInView signInView) {
         mView = signInView;
-        mContext = context;
-        mInteractor = new SignInInteractorImpl(context);
+        mInteractor = new SignInInteractorImpl();
     }
 
     @Override
-    public void validateEmailAndPassword(String email, String password) {
+    public void validateEmailAndPassword(String email, String password, Context context) {
         if (mView == null || mInteractor == null)
             return;
         String emailAddress = email.trim();
         if (TextUtils.isEmpty(emailAddress)) {
-            mView.showEmailErrorMessage(mContext.getString(R.string.empty_email_error_message));
+            mView.showEmailErrorMessage(context.getString(R.string.empty_email_error_message));
         } else if (!EmailUtils.isEmailValid(emailAddress)) {
-            mView.showEmailErrorMessage(mContext.getString(R.string.invalid_email_error_message));
+            mView.showEmailErrorMessage(context.getString(R.string.invalid_email_error_message));
         } else if (TextUtils.isEmpty(password)) {
-            mView.showPasswordErrorMessage(mContext.getString(R.string
+            mView.showPasswordErrorMessage(context.getString(R.string
                                 .empty_password_error_message));
         } else if (password.trim().length() < 6) {
-            mView.showPasswordErrorMessage(mContext.getString(R.string
+            mView.showPasswordErrorMessage(context.getString(R.string
                                 .short_password_error_message));
         } else {
             mView.showProgress();
-            if(mInteractor.isRegisteredUser(email)) {
+            if (mInteractor.isRegisteredUser(email, context)) {
                 mView.navigateToHomeScreen();
 
             } else {
                 mView.hideProgress();
-                mView.showEmailErrorMessage(mContext.getString(R.string
+                mView.showEmailErrorMessage(context.getString(R.string
                                         .unregistered_user_error_message));
             }
         }

@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:paddingTop="@dimen/sign_in_app_icon_padding"
-        android:src="@drawable/logo"/>
+        android:src="@drawable/logo"
+        android:transitionName="@string/logo"/>
 
     <TextView
         android:id="@+id/sign_in"
